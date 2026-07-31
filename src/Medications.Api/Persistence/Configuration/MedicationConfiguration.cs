@@ -12,16 +12,19 @@ public class MedicationConfiguration : IEntityTypeConfiguration<MedicationModel>
         builder.ToTable("Medication");
 
         // Primary Key
-        builder.HasKey(a => a.Id);
+        builder.HasKey(m => m.Id);
 
-        builder.Property(a => a.Name)
+        builder.Property(m => m.Name)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(a => a.Quantity)
+        builder.HasIndex(m => m.Name)
+            .IsUnique();
+
+        builder.Property(m => m.Quantity)
             .IsRequired();
 
-        builder.Property(a => a.CreationDate)
+        builder.Property(m => m.CreationDate)
             .IsRequired();
     }
 }

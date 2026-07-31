@@ -27,28 +27,35 @@ oThe quantity must be greater than zero
 ## Testing with `curl`
 
 The API runs on `http://localhost:8080`.
+These examples use `jq` to pretty-print the JSON response.
+If you want to see the HTTP status code, use `-i` instead.
 
-Get the medication list:
+### Get the medication list
 
 ```bash
-curl http://localhost:8080/api/medication
+curl -s http://localhost:8080/api/medication | jq
 ```
 
-Create a medication:
+### Create a medication
+
+Request body:
+
+- `name`: medication name
+- `quantity`: number of units, must be greater than zero
 
 ```bash
-curl -X POST http://localhost:8080/api/medication \
+curl -s -X POST http://localhost:8080/api/medication \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Paracetamol",
     "quantity": 10
-  }'
+  }' | jq
 ```
 
-Delete a medication:
+### Delete a medication
 
 ```bash
-curl -X DELETE http://localhost:8080/api/medication/00000000-0000-0000-0000-000000000000
+curl -s -X DELETE http://localhost:8080/api/medication/00000000-0000-0000-0000-000000000000 | jq
 ```
 
 ## Updating the database

@@ -16,23 +16,21 @@ public class MedicationsController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public async Task<ActionResult<IReadOnlyCollection<MedicationResponse>>> GetAll()
     {
-        _service.GetAllAsync();
-        return Ok();
+        return Ok(await _service.GetAllAsync());
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] CreateMedicationRequest request)
+    public async Task<ActionResult<MedicationResponse>> Post([FromBody] CreateMedicationRequest request)
     {
-        _service.CreateAsync(request);
-        return Ok();
+        return Ok(await _service.CreateAsync(request));
     }
 
     [HttpDelete("{id:guid}")]
-    public IActionResult Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
-        _service.DeleteAsync(id);
+        await _service.DeleteAsync(id);
         return Ok();
     }
 }

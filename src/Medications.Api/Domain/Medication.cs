@@ -1,4 +1,4 @@
-using Medications.Api.DTOs;
+using Medications.Api.Domain.Exceptions;
 
 namespace Medications.Api.Domain;
 
@@ -21,12 +21,12 @@ class Medication
     {   
         if (quantity < 1)
         {
-            throw new ArgumentException("The quantity must be greater than zero!");
+            throw new BusinessRuleException("The quantity must be greater than zero!");
         }
 
         if (name.Length < 1)
         {
-            throw new ArgumentException("The name can't be empty");
+            throw new BusinessRuleException("The name can't be empty");
         }
         
         return new Medication(

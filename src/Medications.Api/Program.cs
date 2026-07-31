@@ -1,4 +1,5 @@
 using DotNetEnv;
+using Medications.Api.ExceptionHandling;
 using Medications.Api.Persistence;
 using Medications.Api.Persistence.Repositories;
 using Medications.Api.Persistence.Repositories.Abstractions;
@@ -10,9 +11,16 @@ Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MedicationsDbContext>();
-builder.Services.AddTransient<IMedicationsService, MedicationsService>();
-builder.Services.AddTransient<IMedicationsRepository, MedicationsRepository>();
+builder.Services.AddScoped<IMedicationsService, MedicationsService>();
+builder.Services.AddScoped<IMedicationsRepository, MedicationsRepository>();
 builder.Services.AddControllers();
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 builder.Services.AddCors(options =>
 {
@@ -37,5 +45,6 @@ else
 
 app.UseCors("CORS_POLICY");
 app.MapControllers();
+app.UseExceptionHandler();
 
 app.Run();

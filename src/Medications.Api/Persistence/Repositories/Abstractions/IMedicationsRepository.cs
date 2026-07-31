@@ -8,4 +8,5 @@ public interface IMedicationsRepository
     Task DeleteAsync(MedicationModel model);
     Task<IReadOnlyCollection<MedicationModel>> GetAllAsync();
     Task<MedicationModel?> GetByIdAsync(Guid id);
+    Task<MedicationModel?> ExistsByNameAsync(string name);
 }
