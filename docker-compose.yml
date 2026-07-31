@@ -13,5 +13,19 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  api:
+    build:
+      context: .
+      dockerfile: src/Medications.Api/Dockerfile
+    container_name: medications-api
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    environment:
+      ASPNETCORE_URLS: http://+:8080
+      DATABASE_URL: Server=mysql;Port=3306;Database=medications;User=medications_user;Password=medications_pass;
+    ports:
+      - "8080:8080"
+
 volumes:
   mysql_data:

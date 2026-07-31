@@ -16,13 +16,12 @@ public class MedicationConfiguration : IEntityTypeConfiguration<MedicationModel>
 
         builder.Property(a => a.Name)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(50);
 
         builder.Property(a => a.Quantity)
             .IsRequired();
 
         builder.Property(a => a.CreationDate)
-            .IsRequired()
-            .HasMaxLength(50);
+            .IsRequired();
     }
 }

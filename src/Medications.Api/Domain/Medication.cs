@@ -4,10 +4,10 @@ namespace Medications.Api.Domain;
 
 class Medication
 {
-    private Guid Id { get; }
-    private string Name { get; }
-    private int Quantity { get; }
-    private DateTime CreationDate { get; }
+    public Guid Id { get; }
+    public string Name { get; }
+    public int Quantity { get; }
+    public DateTime CreationDate { get; }
 
     private Medication(Guid id, string name, int quantity, DateTime creationDate)
     {
@@ -17,7 +17,7 @@ class Medication
         CreationDate = creationDate;
     }
 
-    public static Medication Create(Guid id, string name, int quantity, )
+    public static Medication Create(Guid id, string name, int quantity)
     {   
         if (quantity < 1)
         {
