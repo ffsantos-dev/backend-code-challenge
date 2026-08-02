@@ -2,7 +2,7 @@
 using Medications.Api.Domain;
 
 namespace Medications.Api.Persistence.Repositories.Abstractions;
-public interface IMedicationsRepository
+public interface IMedicationRepository
 {
     Task<MedicationModel> CreateAsync(MedicationModel model);
     Task DeleteAsync(MedicationModel model);

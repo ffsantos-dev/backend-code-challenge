@@ -11,8 +11,8 @@ Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MedicationsDbContext>();
-builder.Services.AddScoped<IMedicationsService, MedicationsService>();
-builder.Services.AddScoped<IMedicationsRepository, MedicationsRepository>();
+builder.Services.AddScoped<IMedicationService, MedicationService>();
+builder.Services.AddScoped<IMedicationRepository, MedicationRepository>();
 builder.Services.AddControllers();
 
 builder.Logging.ClearProviders();

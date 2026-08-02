@@ -6,11 +6,11 @@ namespace Medications.Api.Controllers;
 
 [ApiController]
 [Route("api/medication")]
-public class MedicationsController : ControllerBase
+public class MedicationController : ControllerBase
 {
-    private readonly IMedicationsService _service;
+    private readonly IMedicationService _service;
 
-    public MedicationsController(IMedicationsService service)
+    public MedicationController(IMedicationService service)
     {
         _service = service;
     }
@@ -22,15 +22,15 @@ public class MedicationsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<MedicationResponse>> Post([FromBody] CreateMedicationRequest request)
+    public async Task<ActionResult<MedicationResponse>> Create([FromBody] CreateMedicationRequest request)
     {
-        return Ok(await _service.CreateAsync(request));
+        return Created("/api/medication", await _service.CreateAsync(request));
     }
 
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
         await _service.DeleteAsync(id);
-        return Ok();
+        return NoContent();
     }
 }

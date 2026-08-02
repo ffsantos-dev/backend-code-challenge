@@ -1,36 +1,63 @@
-# backend-code-challenge
+# Medications API
 
+A simple REST API built with C# and ASP.NET Core for managing medications.
 
+## Overview
 
-We would like you to create a simple REST API that allows to:
+This project was created for a backend code challenge and provides the following capabilities:
 
-1.get a list of medications
+- List all medications
+- Create a new medication
+- Delete an existing medication
 
-2.create a new medication
+Each medication includes:
 
-3.delete a medication
+- `id`
+- `name`
+- `quantity`
+- `creationDate`
 
-REQUIREMENTS:
+The API persists data in MySQL through Entity Framework Core.
 
-•Each medication must have a name, a quantity and a creation date: 
+## Tech Stack
 
-oThe quantity must be greater than zero
+- .NET 10
+- ASP.NET Core Web API
+- Entity Framework Core
+- MySQL
+- Docker and Docker Compose
+- NUnit for tests
 
-•You can use the database technology of your preference 
+## Project Structure
 
-•The project must be written in C# using .Net Core
+- `src/Medications.Api` - main API project
+- `tests/Medications.Api.Tests` - unit test project
 
-•The project can optionally include an example unit test
+## Requirements
 
-•The project can be under a git repository and to deliver it, send us an email with a link to a repo on GitHub, Bitbucket or GitLab
+- .NET SDK 10
+- Docker and Docker Compose
+- Optional: `curl` and `jq` for quick manual checks
 
-## Testing with `curl`
+## How To Run
 
-The API runs on `http://localhost:8080`.
-These examples use `jq` to pretty-print the JSON response.
-If you want to see the HTTP status code, use `-i` instead.
+From the repository root:
 
-### Get the medication list
+```bash
+docker compose up --build
+```
+
+The API will be available at `http://localhost:8080`, and MySQL is started automatically by Compose.
+
+## API Endpoints
+
+### Get all medications
+
+```bash
+GET /api/medication
+```
+
+Example:
 
 ```bash
 curl -s http://localhost:8080/api/medication | jq
@@ -38,10 +65,20 @@ curl -s http://localhost:8080/api/medication | jq
 
 ### Create a medication
 
+```bash
+POST /api/medication
+```
+
 Request body:
 
-- `name`: medication name
-- `quantity`: number of units, must be greater than zero
+```json
+{
+  "name": "Paracetamol",
+  "quantity": 10
+}
+```
+
+Example:
 
 ```bash
 curl -s -X POST http://localhost:8080/api/medication \
@@ -55,21 +92,46 @@ curl -s -X POST http://localhost:8080/api/medication \
 ### Delete a medication
 
 ```bash
+DELETE /api/medication/{id}
+```
+
+Example:
+
+```bash
 curl -s -X DELETE http://localhost:8080/api/medication/00000000-0000-0000-0000-000000000000 | jq
 ```
 
-## Updating the database
+## Tests
 
-If you change the entity model, create a new migration and apply it to MySQL:
+Run the test suite from the repository root:
 
 ```bash
-dotnet ef migrations add <MigrationName>
-dotnet ef database update
+dotnet test Medications.slnx
 ```
 
-If `dotnet ef` is not available yet, install it once:
+Run only the unit test project:
+
+```bash
+dotnet test tests/Medications.Api.Tests/Medications.Api.Tests.csproj
+```
+
+## Database Migrations
+
+If you change the entity model, create and apply a new migration from the repository root:
+
+```bash
+dotnet ef migrations add <MigrationName> --project src/Medications.Api
+dotnet ef database update --project src/Medications.Api
+```
+
+If `dotnet ef` is not installed yet:
 
 ```bash
 dotnet tool install --global dotnet-ef
 dotnet add src/Medications.Api package Microsoft.EntityFrameworkCore.Design
 ```
+
+## Notes
+
+- The API validates that medication quantity is greater than zero.
+- Creation dates are stored automatically when a medication is created.

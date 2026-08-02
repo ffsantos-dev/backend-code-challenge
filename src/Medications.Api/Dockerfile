@@ -1,7 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-COPY Medications.sln ./
 COPY src/Medications.Api/Medications.Api.csproj src/Medications.Api/
 RUN dotnet restore src/Medications.Api/Medications.Api.csproj
 

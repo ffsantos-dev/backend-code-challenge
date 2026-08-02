@@ -2,7 +2,7 @@ using Medications.Api.Domain.Exceptions;
 
 namespace Medications.Api.Domain;
 
-class Medication
+public class Medication
 {
     public Guid Id { get; }
     public string Name { get; }
@@ -24,7 +24,7 @@ class Medication
             throw new BusinessRuleException("The quantity must be greater than zero!");
         }
 
-        if (name.Length < 1)
+        if (name == null || name.Trim().Length < 1)
         {
             throw new BusinessRuleException("The name can't be empty");
         }
@@ -33,6 +33,6 @@ class Medication
             id,
             name,
             quantity,
-            DateTime.Now);
+            DateTime.UtcNow);
     }
 } 

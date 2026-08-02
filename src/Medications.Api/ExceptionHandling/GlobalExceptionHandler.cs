@@ -19,7 +19,7 @@ public class GlobalExceptionHandler : IExceptionHandler
                 httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
                 break;
             case BusinessRuleException:
-                httpContext.Response.StatusCode = StatusCodes.Status409Conflict;
+                httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
                 break;
             //case UnauthorizedException:
             //    httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler : IExceptionHandler
         }
         await httpContext.Response.WriteAsJsonAsync(new
         {
-            Error = exception.Message
+            message = exception.Message
         });
         return true;
     }
